@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PloverCRM Landing Page Plan</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+    :root{--ink:#0d1511;--muted:#63746b;--green:#0b8b49;--green2:#19c873;--mint:#eaf8ef;--line:#dfe8e2;--white:#fff;--cream:#fff9ef;--blue:#edf6ff;--purple:#f4efff;--orange:#fff3e4;--shadow:0 26px 80px rgba(4,27,18,.10);--soft:0 14px 38px rgba(4,27,18,.07)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Poppins,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fbfffb,#f5faf7 42%,#fff);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 12% 4%,rgba(20,182,90,.14),transparent 28rem),radial-gradient(circle at 88% 5%,rgba(110,180,255,.16),transparent 26rem),linear-gradient(90deg,rgba(17,23,19,.035) 1px,transparent 1px) 0 0/88px 88px}.wrap{width:min(1240px,calc(100% - 40px));margin:auto}.hero{padding:70px 0 44px;text-align:center}.kicker{display:inline-flex;align-items:center;gap:9px;padding:9px 15px;border-radius:999px;background:var(--mint);border:1px solid #d7eadf;color:var(--green);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.07em}.kicker:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green)}h1{font-size:clamp(46px,7vw,92px);line-height:.96;letter-spacing:-.065em;max-width:1040px;margin:24px auto 18px}p{color:var(--muted);line-height:1.7}.hero p{font-size:18px;font-weight:500;max-width:820px;margin:0 auto}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:42px;text-align:left}.strategy-card{padding:30px;border-radius:30px;background:rgba(255,255,255,.9);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(18px)}.strategy-card.dark{background:radial-gradient(circle at 85% 20%,rgba(217,255,113,.20),transparent 15rem),linear-gradient(135deg,#041b12,#0b7a3e);color:#fff}.strategy-card.dark p,.strategy-card.dark li{color:rgba(255,255,255,.78)}.strategy-card h2{font-size:28px;line-height:1.08;margin:0 0 14px;letter-spacing:-.035em}.strategy-card ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:10px}.strategy-card li{display:flex;gap:10px;color:#40564a;font-size:14px}.strategy-card li:before{content:"✓";display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--mint);color:var(--green);font-weight:900;font-size:12px}.strategy-card.dark li:before{background:rgba(255,255,255,.14);color:#d9ff72}.nav-strip{position:sticky;top:0;z-index:20;padding:12px 0;background:rgba(251,255,251,.78);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.8);border-bottom:1px solid var(--line)}.nav-strip .wrap{display:flex;gap:8px;overflow:auto}.nav-strip a{white-space:nowrap;text-decoration:none;color:#40564a;background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 13px;font-size:12px;font-weight:800;box-shadow:0 8px 18px rgba(4,27,18,.045)}.flow{padding:58px 0 90px}.section-head{text-align:center;margin-bottom:34px}.section-head h2{font-size:clamp(34px,4.6vw,64px);line-height:1.02;letter-spacing:-.05em;margin:0}.section-head p{max-width:760px;margin:16px auto 0}.timeline{position:relative;display:grid;gap:24px}.timeline:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(var(--green),rgba(12,122,61,.08));transform:translateX(-50%)}.plan-section{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:stretch}.plan-section:nth-child(even) .section-card{grid-column:2}.plan-section:nth-child(even) .reason-card{grid-column:1;grid-row:1}.section-card,.reason-card{position:relative;border-radius:30px;background:rgba(255,255,255,.94);border:1px solid var(--line);box-shadow:var(--soft);overflow:hidden}.section-card{padding:28px}.reason-card{padding:26px;background:linear-gradient(145deg,#fff,#f7fbf8)}.plan-section:before{content:attr(data-step);position:absolute;left:50%;top:34px;z-index:2;display:grid;place-items:center;width:48px;height:48px;border-radius:17px;background:var(--green);color:#fff;font-weight:900;transform:translateX(-50%);box-shadow:0 14px 34px rgba(12,122,61,.24)}.stage{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--mint);color:var(--green);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}.section-card h3{font-size:30px;line-height:1.08;letter-spacing:-.035em;margin:18px 0 12px}.purpose{font-size:15px;font-weight:600;color:#40564a;margin:0 0 18px}.mock{border-radius:24px;padding:22px;background:linear-gradient(135deg,#f9fffb,#edf8f2);border:1px solid #dcebe2;margin-top:18px}.mock h4{margin:0 0 12px;font-size:15px;color:var(--green);text-transform:uppercase;letter-spacing:.06em}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:8px 11px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800;color:#40564a}.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.mini{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:700}.reason-card h4{margin:0 0 12px;font-size:18px}.reason-card p{margin:0 0 14px;font-size:14px}.reason-card .why{padding:16px;border-radius:18px;background:var(--mint);color:#26533b;font-size:13px;font-weight:600}.cta-note{display:flex;align-items:center;gap:10px;margin-top:16px;padding:14px;border-radius:16px;background:#111713;color:#fff;font-size:13px;font-weight:800}.cta-note:before{content:"CTA";display:grid;place-items:center;width:42px;height:28px;border-radius:999px;background:#d9ff72;color:#163119;font-size:11px}.matrix{padding:74px 0}.matrix-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.persona,.angle{padding:20px;border-radius:24px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 30px rgba(4,27,18,.055)}.persona b,.angle b{display:block;margin-bottom:9px}.persona span,.angle span{display:block;color:var(--muted);font-size:13px;line-height:1.5}.angle{background:linear-gradient(145deg,#fff,#f4fbf6)}.final{padding:40px 0 90px}.final-card{padding:46px;border-radius:38px;background:radial-gradient(circle at 50% 0,rgba(217,255,113,.34),transparent 34%),linear-gradient(135deg,#041b12,#0c7a3d);color:#fff;text-align:center;box-shadow:var(--shadow)}.final-card h2{font-size:clamp(34px,5vw,66px);line-height:1.02;letter-spacing:-.05em;margin:0 auto 18px;max-width:900px}.final-card p{color:rgba(255,255,255,.76);max-width:740px;margin:0 auto 28px}.path{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}.path span{padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);font-size:13px;font-weight:800}@media(max-width:980px){.hero-grid,.plan-section{grid-template-columns:1fr}.timeline:before,.plan-section:before{display:none}.plan-section:nth-child(even) .section-card,.plan-section:nth-child(even) .reason-card{grid-column:auto;grid-row:auto}.matrix-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:640px){.wrap{width:calc(100% - 24px)}h1{font-size:42px}.mini-grid,.matrix-grid{grid-template-columns:1fr}.strategy-card,.section-card,.reason-card,.final-card{padding:24px}.nav-strip{display:none}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="kicker">PloverCRM Homepage Strategy</div>
+      <h1>Landing page flow designed to turn lead chaos into lead control.</h1>
+      <p>This visual plan maps every homepage section to the visitor’s awareness stage, conversion purpose, key content, and the reason it should exist.</p>
+      <div class="hero-grid">
+        <div class="strategy-card dark">
+          <h2>Core positioning</h2>
+          <p>PloverCRM should not lead as a generic CRM. It should own the specific problem after capture: WordPress leads are coming in, but follow-up, ownership, source tracking, and pipeline control are scattered.</p>
+          <ul>
+            <li>Primary audience: problem-aware visitors</li>
+            <li>Main message: stop losing leads after form submission</li>
+            <li>Primary promise: capture, track, assign, and follow up from one WordPress-based CRM</li>
+          </ul>
+        </div>
+        <div class="strategy-card">
+          <h2>Conversion journey</h2>
+          <p>The page should move visitors from pain recognition to trust and action.</p>
+          <ul>
+            <li>Pain: leads are scattered after capture</li>
+            <li>System: PloverCRM creates one clear workflow</li>
+            <li>Proof: features, benefits, use cases, reviews</li>
+            <li>Action: start trial, compare plans, or book demo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav-strip">
+    <div class="wrap">
+      <a href="#s1">Hero</a><a href="#s2">Problem</a><a href="#s3">Solution</a><a href="#s4">Features</a><a href="#s5">Workflow</a><a href="#s6">Benefits</a><a href="#s7">Steps</a><a href="#s8">Integrations</a><a href="#s9">Use Cases</a><a href="#s10">Reviews</a><a href="#s11">Objections</a><a href="#s12">Before/After</a><a href="#s13">FAQ</a><a href="#s14">CTA</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="flow">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Recommended homepage structure</h2>
+          <p>Each block has a clear conversion job. The page starts with problem-aware messaging, then builds toward solution clarity, product proof, and final action.</p>
+        </div>
+        <div class="timeline">
+          <article class="plan-section" id="s1" data-step="01">
+            <div class="section-card"><span class="stage">Problem aware</span><h3>Hero: Stop losing WordPress leads after they submit the form</h3><p class="purpose">Make the visitor feel understood immediately and explain the main promise in plain language.</p><div class="mock"><h4>Include</h4><div class="chips"><span class="chip">Headline</span><span class="chip">Subheadline</span><span class="chip">Start Free Trial</span><span class="chip">See How It Works</span><span class="chip">Dashboard visual</span><span class="chip">Source badges</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>The files recommend leading with problem-aware messaging. Visitors should instantly understand that PloverCRM solves what happens after capture, not just lead generation.</p><div class="why">Best job: create relevance in the first 5 seconds.</div><div class="cta-note">Primary CTA: Start Free Trial</div></div>
+          </article>
+
+          <article class="plan-section" id="s2" data-step="02">
+            <div class="section-card"><span class="stage">Problem aware</span><h3>Problem: Getting leads is not enough if nobody tracks what happens next</h3><p class="purpose">Name the hidden problem: leads are lost after form submission because follow-up is scattered.</p><div class="mock"><h4>Broken workflow</h4><div class="chips"><span class="chip">Form submission</span><span class="chip">Email inbox</span><span class="chip">WhatsApp</span><span class="chip">Spreadsheet</span><span class="chip">Forgotten follow-up</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>Problem-aware visitors feel pain but may not have named the cause. This section reframes the issue from “we need more leads” to “we need lead control.”</p><div class="why">Best job: increase urgency and make the pain obvious.</div></div>
+          </article>
+
+          <article class="plan-section" id="s3" data-step="03">
+            <div class="section-card"><span class="stage">Solution aware</span><h3>Solution intro: Turn scattered website leads into a clear follow-up system</h3><p class="purpose">Introduce PloverCRM as the system that organizes capture, source tracking, ownership, reminders, and pipeline flow.</p><div class="mock"><h4>Core flow</h4><div class="chips"><span class="chip">Capture</span><span class="chip">Enrich</span><span class="chip">Assign</span><span class="chip">Track</span><span class="chip">Follow up</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>After agitating the problem, visitors need a simple answer. This section should be clear, visual, and non-technical.</p><div class="why">Best job: move from pain to solution clarity.</div></div>
+          </article>
+
+          <article class="plan-section" id="s4" data-step="04">
+            <div class="section-card"><span class="stage">Product aware</span><h3>Key features: The product pillars that keep every lead moving</h3><p class="purpose">Show the actual capabilities behind the promise.</p><div class="mock"><h4>Feature set</h4><div class="mini-grid"><div class="mini">Lead capture</div><div class="mini">Source tracking</div><div class="mini">Pipeline stages</div><div class="mini">Assignments</div><div class="mini">Reminders</div><div class="mini">Mobile CRM</div><div class="mini">Automations</div><div class="mini">Ad feedback</div></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>Visitors need enough product detail to believe PloverCRM can solve their daily workflow problems.</p><div class="why">Best job: turn promise into proof.</div></div>
+          </article>
+
+          <article class="plan-section" id="s5" data-step="05">
+            <div class="section-card"><span class="stage">Product aware</span><h3>Workflow visual: From form submission to follow-up-ready lead</h3><p class="purpose">Make the product feel simple by showing the lead journey from source to action.</p><div class="mock"><h4>Visual sequence</h4><div class="chips"><span class="chip">Form/ad/webhook</span><span class="chip">CRM record</span><span class="chip">Source data</span><span class="chip">Owner</span><span class="chip">Reminder</span><span class="chip">Mobile follow-up</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>CRM can feel abstract. A workflow diagram helps visitors understand what happens and reduces perceived complexity.</p><div class="why">Best job: explain “how it works” at a glance.</div></div>
+          </article>
+
+          <article class="plan-section" id="s6" data-step="06">
+            <div class="section-card"><span class="stage">Problem + product aware</span><h3>Benefits: Better follow-up, stronger pipeline, smarter growth</h3><p class="purpose">Translate features into outcomes the team feels every day.</p><div class="mock"><h4>Benefit cards</h4><div class="mini-grid"><div class="mini">Respond before leads go cold</div><div class="mini">Know where leads came from</div><div class="mini">Reduce messy handling</div><div class="mini">Improve campaign feedback</div></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>People buy relief and outcomes, not just feature lists. This section connects product mechanics to business value.</p><div class="why">Best job: make the value emotional and practical.</div></div>
+          </article>
+
+          <article class="plan-section" id="s7" data-step="07">
+            <div class="section-card"><span class="stage">Solution aware</span><h3>Five-step process: How it works in five simple steps</h3><p class="purpose">Reduce adoption anxiety by showing setup and usage as a clear process.</p><div class="mock"><h4>Steps</h4><div class="chips"><span class="chip">Connect sources</span><span class="chip">Capture leads</span><span class="chip">Enrich data</span><span class="chip">Assign follow-up</span><span class="chip">Automate feedback</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>The CSV shows “I do not want another tool” as a key objection. This section makes PloverCRM feel easy to start and easy to use.</p><div class="why">Best job: reduce friction.</div></div>
+          </article>
+
+          <article class="plan-section" id="s8" data-step="08">
+            <div class="section-card"><span class="stage">Product aware</span><h3>Integrations: Works with the tools your leads already come from</h3><p class="purpose">Show PloverCRM fits existing sources instead of forcing a new workflow.</p><div class="mock"><h4>Show logos/cards</h4><div class="chips"><span class="chip">WordPress</span><span class="chip">Google Ads</span><span class="chip">Meta Ads</span><span class="chip">Webhooks</span><span class="chip">Contact Form 7</span><span class="chip">Fluent Forms</span><span class="chip">Elementor Forms</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>Visitors already use forms, ads, plugins, and webhooks. Integration proof reduces setup concerns and increases trust.</p><div class="why">Best job: show compatibility.</div></div>
+          </article>
+
+          <article class="plan-section" id="s9" data-step="09">
+            <div class="section-card"><span class="stage">Problem + solution aware</span><h3>Use cases: Built for teams that live and lose leads every day</h3><p class="purpose">Help each buyer persona quickly recognize themselves.</p><div class="mock"><h4>Audience cards</h4><div class="mini-grid"><div class="mini">WordPress owners</div><div class="mini">Local services</div><div class="mini">Digital agencies</div><div class="mini">Performance marketers</div><div class="mini">WordPress developers</div><div class="mini">Sales teams</div><div class="mini">Coaches / education</div></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>The CSV identifies multiple personas. Use cases let the homepage serve all of them without weakening the main message.</p><div class="why">Best job: increase personal relevance.</div></div>
+          </article>
+
+          <article class="plan-section" id="s10" data-step="10">
+            <div class="section-card"><span class="stage">Product aware</span><h3>Customer stories: Reviews that build trust fast</h3><p class="purpose">Use proof from realistic customers to reduce doubt.</p><div class="mock"><h4>Review outcomes</h4><div class="chips"><span class="chip">Faster follow-up</span><span class="chip">Better source visibility</span><span class="chip">Cleaner handling</span><span class="chip">Clear ownership</span><span class="chip">Fewer missed leads</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>Visitors need confidence before taking action. Reviews prove that the product solves real operational pain.</p><div class="why">Best job: reduce skepticism.</div></div>
+          </article>
+
+          <article class="plan-section" id="s11" data-step="11">
+            <div class="section-card"><span class="stage">Most aware / objection handling</span><h3>Objections: Still wondering if you need a lead CRM?</h3><p class="purpose">Answer the reasons visitors may hesitate.</p><div class="mock"><h4>Answer directly</h4><div class="mini-grid"><div class="mini">“I already have forms.”</div><div class="mini">“I do not want another tool.”</div><div class="mini">“Will my team use it?”</div><div class="mini">“Will it work with my setup?”</div></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>The buyer persona file includes strong objections. Handling them before the CTA prevents silent drop-off.</p><div class="why">Best job: remove conversion blockers.</div></div>
+          </article>
+
+          <article class="plan-section" id="s12" data-step="12">
+            <div class="section-card"><span class="stage">Problem + solution aware</span><h3>Before vs after: From lead chaos to lead control</h3><p class="purpose">Make the transformation visually obvious.</p><div class="mock"><h4>Contrast</h4><div class="mini-grid"><div class="mini">Before: inboxes, sheets, missed follow-up</div><div class="mini">After: one CRM, owner, reminders, source tracking</div></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>“From Lead Chaos to Lead Control” is one of the strongest emotional angles from the ad-angle PDF.</p><div class="why">Best job: show the transformation.</div></div>
+          </article>
+
+          <article class="plan-section" id="s13" data-step="13">
+            <div class="section-card"><span class="stage">Most aware</span><h3>FAQ: Final clarity before action</h3><p class="purpose">Resolve specific questions from cautious buyers.</p><div class="mock"><h4>FAQ topics</h4><div class="chips"><span class="chip">WordPress forms</span><span class="chip">Ads/webhooks</span><span class="chip">Mobile CRM</span><span class="chip">Reminders</span><span class="chip">Assignments</span><span class="chip">Agencies</span><span class="chip">Automations</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>FAQs help visitors who are close to action but need specific reassurance.</p><div class="why">Best job: answer last-mile questions.</div></div>
+          </article>
+
+          <article class="plan-section" id="s14" data-step="14">
+            <div class="section-card"><span class="stage">Most aware</span><h3>Final CTA: Start managing leads before the next opportunity goes cold</h3><p class="purpose">Give visitors a clear next step after the full story has been told.</p><div class="mock"><h4>CTA block</h4><div class="chips"><span class="chip">Start Free Trial</span><span class="chip">Compare Plans</span><span class="chip">Book Demo</span></div></div></div>
+            <div class="reason-card"><h4>Why this matters</h4><p>The page should end with action, not information. By this point, the visitor understands the pain, solution, fit, proof, and next step.</p><div class="why">Best job: convert interest into action.</div><div class="cta-note">Primary CTA: Start Free Trial</div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="matrix">
+      <div class="wrap">
+        <div class="section-head"><h2>Persona and angle checklist</h2><p>These are the key audiences and message angles the homepage should support without becoming generic.</p></div>
+        <div class="matrix-grid">
+          <div class="persona"><b>WordPress Business Owner</b><span>Needs website leads captured, tracked, and followed up.</span></div>
+          <div class="persona"><b>Local Service Owner</b><span>Needs fewer missed inquiries and more booked jobs.</span></div>
+          <div class="persona"><b>Digital Agency Owner</b><span>Needs cleaner client lead management and reporting.</span></div>
+          <div class="persona"><b>Performance Marketer</b><span>Needs source clarity and better lead quality feedback.</span></div>
+          <div class="persona"><b>WordPress Developer</b><span>Needs a valuable CRM layer for client websites.</span></div>
+          <div class="persona"><b>Sales Manager</b><span>Needs ownership, reminders, and clear lead stages.</span></div>
+          <div class="persona"><b>Coaching / Education Owner</b><span>Needs organized inquiries and better enrollment follow-up.</span></div>
+          <div class="angle"><b>Core angle</b><span>Your leads are not the problem. Your system after capture is.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="wrap">
+        <div class="final-card">
+          <h2>The homepage should sell lead control, not generic CRM software.</h2>
+          <p>The final flow should guide the visitor through a conversion journey that starts with missed leads and ends with confidence that PloverCRM is the WordPress-based system to capture, track, assign, and follow up.</p>
+          <div class="path"><span>Pain</span><span>Cost</span><span>System</span><span>Product</span><span>Benefits</span><span>Simplicity</span><span>Relevance</span><span>Proof</span><span>Objections</span><span>Action</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
