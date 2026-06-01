@@ -198,7 +198,7 @@ Recommended widths:
 
 The homepage journey should follow:
 
-> Pain → Cost → System → Product → Benefits → Simplicity → Relevance → Proof → Objections → Action
+> Promise → Pain → Mechanism → Value → Compatibility → Features → Product Tangibility → Differentiator → Relevance → Proof → Objections → Decision → FAQ → Action
 
 ## Elevation & Depth
 
@@ -239,20 +239,17 @@ Marketing CTAs may use larger pill buttons, but their color hierarchy should sti
 
 Primary buttons use solid green with white text. They should be reserved for important conversion actions.
 
-Primary CTA examples:
+Primary CTA:
 
-- Start Free Trial
-- Start Managing Leads
-- Activate Your WordPress Lead System
+- Download Plugin
 
 Secondary buttons use white or translucent backgrounds with a light border.
 
-Secondary CTA examples:
+Secondary CTA:
 
-- See How It Works
-- View Solution
-- Compare Plans
-- Book Demo
+- Try a Demo
+
+Supporting reassurance should stay short and distributed across the page. Use phrases such as **No credit card required**, **30-day free trial**, **Works with your existing WordPress forms**, and **Set up your first source in minutes** only where they support conversion without adding clutter.
 
 Every major section does not need a CTA. Hero, integrations, pricing, and final CTA sections should usually include one.
 
@@ -383,22 +380,22 @@ Use small green badges inside cards to show results such as “Faster follow-up�
 
 ## Homepage Sections
 
-Use this flow as the default homepage structure:
+Use this approved flow as the default homepage structure:
 
-1. Hero — problem-aware promise.
-2. Problem section — missed leads after capture.
-3. Solution intro — PloverCRM as the lead management system.
-4. Key features/product pillars.
-5. How the solution works visual flow.
-6. Benefits your team feels every day.
-7. Five-step process.
-8. Integrations.
-9. Use cases by audience.
-10. Customer stories/reviews.
-11. Objection handling.
-12. Before vs after transformation.
-13. FAQ.
-14. Final CTA.
+1. Hero — clear WordPress-first promise.
+2. Broken Funnel vs Lead-Control Funnel — show what breaks after capture.
+3. Connected Lead System — explain the source-to-CRM-to-outcome mechanism.
+4. Metric Benefits — number-led value from industry research.
+5. Integrations — grouped by capture, follow-up, and outcomes.
+6. Product Pillars Tabs — progressive disclosure for core capabilities.
+7. Live Lead Record Anatomy — show the finished follow-up-ready record.
+8. Mobile CRM Access — dedicated web/iPhone/Android differentiator.
+9. Use Cases — role and business relevance.
+10. Customer Reviews / Outcomes — human proof.
+11. Objection Handling — persuasive objection cards.
+12. Practical Buying Comparison — final decision recap.
+13. FAQ — factual accordions.
+14. Final CTA — focused conversion panel.
 
 Each major section should define:
 

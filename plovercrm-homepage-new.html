@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PloverCRM — WordPress-first CRM for Lead Control</title>
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="icon" href="assets/brand/plovercrm-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+
+    :root {
+      --background: #ffffff;
+      --foreground: #171717;
+      --muted: #f7f7f7;
+      --muted-foreground: #63746b;
+      --primary: #0b8b49;
+      --primary-dark: #064d28;
+      --primary-soft: #edf9f1;
+      --mint: #eaf8ef;
+      --cream: #fff9ef;
+      --blue-soft: #edf6ff;
+      --orange-soft: #fff3e4;
+      --line: #e5e5e5;
+      --card: rgba(255, 255, 255, .94);
+      --shadow: 0 22px 60px rgba(4, 27, 18, .08);
+      --shadow-strong: 0 34px 90px rgba(4, 27, 18, .14);
+      --radius-card: 26px;
+      --radius-panel: 34px;
+      --radius-pill: 999px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Geist, Inter, ui-sans-serif, system-ui, sans-serif;
+      color: var(--foreground);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(11, 139, 73, .14), transparent 31rem),
+        radial-gradient(circle at 90% 3%, rgba(56, 166, 165, .12), transparent 27rem),
+        linear-gradient(180deg, #fff 0%, #fbfdfb 48%, #fff 100%);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(13, 21, 17, .035) 1px, transparent 1px) 0 0 / 88px 88px,
+        linear-gradient(rgba(13, 21, 17, .035) 1px, transparent 1px) 0 0 / 88px 88px;
+      mask-image: linear-gradient(#000, transparent 74%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    p { color: var(--muted-foreground); line-height: 1.68; }
+    button, a { touch-action: manipulation; }
+    a:focus-visible, button:focus-visible { outline: 3px solid rgba(11, 139, 73, .45); outline-offset: 4px; }
+
+    .skip-link { position: absolute; left: 16px; top: -80px; z-index: 100; padding: 12px 16px; border-radius: 12px; background: var(--primary); color: #fff; font-weight: 800; }
+    .skip-link:focus { top: 16px; }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: auto; }
+    .wide { width: min(1440px, calc(100% - 48px)); margin: auto; }
+
+    .badge { display: inline-flex; align-items: center; gap: 9px; padding: 8px 13px; border-radius: var(--radius-pill); background: var(--primary-soft); border: 1px solid rgba(11, 139, 73, .14); color: var(--primary); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+    .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 4px rgba(11, 139, 73, .1); }
+
+    h1, h2, h3 { margin: 0; color: var(--foreground); letter-spacing: -.045em; }
+    h1 { font-size: clamp(48px, 7.6vw, 92px); line-height: .94; }
+    h2 { font-size: clamp(34px, 5vw, 66px); line-height: 1.03; }
+    h3 { font-size: 22px; line-height: 1.15; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 21px; border: 1px solid var(--line); border-radius: var(--radius-pill); background: #fff; color: var(--foreground); font-size: 14px; font-weight: 750; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(4, 27, 18, .08); }
+    .btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .section-actions { margin-top: 24px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); box-shadow: var(--shadow); }
+
+    .header { position: sticky; top: 14px; z-index: 50; width: min(1180px, calc(100% - 40px)); margin: 14px auto 0; border: 1px solid rgba(229, 229, 229, .8); border-radius: 22px; background: rgba(255, 255, 255, .86); backdrop-filter: blur(22px); box-shadow: 0 18px 55px rgba(4, 27, 18, .08); }
+    .nav { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 12px 14px 12px 22px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 850; }
+    .brand img { width: 32px; height: 32px; }
+    .links { display: flex; gap: 22px; color: #40564a; font-size: 14px; font-weight: 650; }
+    .nav-actions { display: flex; gap: 10px; }
+    .nav-actions .btn { min-height: 42px; }
+
+    section { padding: 92px 0; scroll-margin-top: 110px; }
+    .section-head { text-align: center; margin-bottom: 44px; }
+    .section-head p { max-width: 760px; margin: 18px auto 0; font-size: 17px; }
+
+    .hero { padding: 78px 0 92px; text-align: center; }
+    .hero-inner { width: min(960px, calc(100% - 40px)); margin: auto; }
+    .hero h1 { max-width: 940px; margin: 18px auto 0; }
+    .hero p { max-width: 800px; margin: 26px auto 0; font-size: 18px; }
+    .hero .actions { justify-content: center; margin-top: 30px; }
+    .microcopy { margin-top: 14px; color: var(--primary); font-size: 13px; font-weight: 750; }
+    .hero-visual { position: relative; width: min(1080px, calc(100% - 40px)); margin: 46px auto 0; padding: 26px; border-radius: var(--radius-panel); background: rgba(255,255,255,.76); border: 1px solid rgba(255,255,255,.92); box-shadow: var(--shadow-strong); overflow: hidden; }
+    .dashboard-mock { display: grid; grid-template-columns: 230px 1fr; min-height: 430px; border: 1px solid var(--line); border-radius: 26px; background: #fff; overflow: hidden; text-align: left; }
+    .mock-sidebar { padding: 22px; background: #f8fbf9; border-right: 1px solid var(--line); }
+    .mock-logo { display: flex; align-items: center; gap: 10px; font-weight: 850; margin-bottom: 28px; }
+    .mock-logo img { width: 28px; height: 28px; }
+    .mock-nav { display: grid; gap: 10px; }
+    .mock-nav span { padding: 12px 14px; border-radius: 14px; color: #53665c; font-size: 13px; font-weight: 700; }
+    .mock-nav span:first-child { background: var(--primary-soft); color: var(--primary); }
+    .mock-main { padding: 24px; }
+    .mock-top { display: flex; justify-content: space-between; gap: 16px; align-items: start; margin-bottom: 22px; }
+    .mock-top strong { display: block; font-size: 28px; letter-spacing: -.04em; }
+    .mock-pill { padding: 9px 12px; border-radius: var(--radius-pill); background: var(--primary-soft); color: var(--primary); font-size: 12px; font-weight: 850; }
+    .lead-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+    .lead-card { padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 10px 24px rgba(4,27,18,.04); }
+    .lead-card.featured { background: linear-gradient(135deg, #fff, var(--primary-soft)); }
+    .lead-card small { display: block; color: var(--muted-foreground); font-weight: 750; margin-bottom: 6px; }
+    .lead-card b { display: block; }
+    .lead-card p { margin: 10px 0 0; font-size: 14px; }
+    .stage-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .stage-row span { padding: 8px 10px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: 12px; font-weight: 750; color: #40564a; }
+
+    .funnel { background: linear-gradient(180deg, rgba(237,249,241,.52), transparent); }
+    .funnel-compare { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 680px; overflow: hidden; border-radius: 42px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow-strong); }
+    .funnel-side { position: relative; display: grid; grid-template-rows: 1fr auto; gap: 24px; padding: 36px; overflow: hidden; }
+    .funnel-side.broken { background: linear-gradient(135deg, #fff, #f4f7f5); }
+    .funnel-side.control { background: radial-gradient(circle at 70% 5%, rgba(11,139,73,.16), transparent 24rem), linear-gradient(135deg, #fff, var(--primary-soft)); }
+    .split-line { position: absolute; inset: 0 auto 0 50%; z-index: 3; width: 2px; background: linear-gradient(transparent, rgba(6,21,13,.78), transparent); transform: translateX(-1px); }
+    .split-handle { position: absolute; left: 50%; top: 48%; z-index: 4; transform: translate(-50%, -50%); display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); color: var(--primary); font-weight: 900; }
+    .funnel-art { position: relative; min-height: 420px; display: grid; place-items: center; }
+    .funnel-shape { position: relative; width: min(340px, 82%); height: 330px; clip-path: polygon(4% 0, 96% 0, 72% 100%, 28% 100%); border-radius: 22px 22px 42px 42px; background: linear-gradient(180deg, #1f2f32 0 18%, #7f8c8d 18% 42%, #9aa6a8 42% 66%, #c6d0c9 66% 83%, #dbe9c5 83% 100%); box-shadow: inset 0 18px 28px rgba(0,0,0,.22), 0 24px 70px rgba(4,27,18,.16); }
+    .funnel-shape.controlled { background: linear-gradient(180deg, #09242d 0 18%, #2584e8 18% 42%, #36b5a8 42% 66%, #3ad681 66% 83%, #c9ec55 83% 100%); }
+    .funnel-lip { position: absolute; left: 50%; top: -9px; width: 104%; height: 58px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(ellipse at center, rgba(2,15,18,.96) 0 48%, rgba(255,255,255,.25) 49% 52%, transparent 53%); }
+    .crack { position: absolute; z-index: 2; width: 4px; background: rgba(23,33,33,.68); border-radius: 999px; transform-origin: top; }
+    .crack.one { left: 36%; top: 78px; height: 118px; transform: rotate(-18deg); }
+    .crack.two { left: 43%; top: 178px; height: 86px; transform: rotate(46deg); }
+    .crack.three { left: 31%; top: 210px; height: 72px; transform: rotate(-62deg); }
+    .leak { position: absolute; left: 28%; bottom: 54px; width: 90px; height: 110px; border-left: 3px solid rgba(23,33,33,.62); border-bottom: 3px solid rgba(23,33,33,.62); border-radius: 0 0 0 46px; opacity: .8; }
+    .funnel-labels { position: absolute; right: 0; top: 92px; display: grid; gap: 26px; width: 210px; }
+    .funnel-labels span { padding: 10px 12px; border-radius: 999px; background: rgba(255,255,255,.72); border: 1px solid rgba(229,229,229,.72); color: #40564a; font-size: 13px; font-weight: 850; box-shadow: 0 10px 24px rgba(4,27,18,.05); }
+    .broken .funnel-labels { right: auto; left: 0; opacity: .72; }
+    .broken .funnel-labels span { background: rgba(247,247,247,.86); color: #6b7772; text-decoration: line-through; }
+    .funnel-caption { position: relative; z-index: 2; }
+    .funnel-caption h3 { font-size: 31px; }
+    .funnel-caption p { margin-bottom: 0; font-size: 16px; }
+    .caption-points { display: grid; gap: 9px; margin-top: 18px; }
+    .caption-points span { display: flex; gap: 9px; color: #40564a; font-size: 14px; font-weight: 700; }
+    .broken .caption-points span::before { content: ""; width: 16px; height: 16px; flex: 0 0 16px; margin-top: 2px; border-radius: 50%; background: #fff1f0; border: 1px solid #ffd1cc; }
+    .control .caption-points span::before { content: "✓"; display: grid; place-items: center; width: 16px; height: 16px; flex: 0 0 16px; margin-top: 2px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); font-size: 10px; font-weight: 900; }
+    .funnel-note { margin: 24px auto 0; max-width: 840px; padding: 20px 24px; border-radius: 22px; background: #06150d; color: #fff; text-align: center; box-shadow: var(--shadow); }
+    .funnel-note p { margin: 0; color: rgba(255,255,255,.78); font-weight: 650; }
+
+    .system-map { display: grid; grid-template-columns: .86fr 1.1fr .86fr; gap: 22px; align-items: center; }
+    .map-column { display: grid; gap: 12px; }
+    .map-label { color: var(--muted-foreground); font-size: 12px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 4px 6px; }
+    .source-box, .output-box { display: flex; align-items: center; gap: 13px; min-height: 62px; padding: 13px 15px; border-radius: 18px; background: #fff; border: 1px solid var(--line); box-shadow: 0 12px 30px rgba(4,27,18,.05); font-weight: 800; }
+    .source-box img { width: 32px; height: 32px; object-fit: contain; }
+    .source-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); font-size: 15px; font-weight: 900; }
+    .hub { position: relative; padding: 28px; border-radius: var(--radius-panel); background: linear-gradient(135deg, #fff, #f8fcfa); border: 1px solid var(--line); box-shadow: var(--shadow-strong); }
+    .hub::before, .hub::after { content: ""; position: absolute; top: 50%; width: 54px; border-top: 2px dashed rgba(11,139,73,.28); }
+    .hub::before { right: 100%; }
+    .hub::after { left: 100%; }
+    .hub-core { display: grid; place-items: center; width: 118px; height: 118px; margin: 0 auto 22px; border-radius: 30px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .hub-core img { width: 58px; height: 58px; }
+    .hub h3 { text-align: center; font-size: 30px; }
+    .hub p { text-align: center; margin: 12px auto 22px; max-width: 430px; }
+    .processing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .process-chip { padding: 12px 13px; border-radius: 14px; background: #fff; border: 1px solid var(--line); color: #40564a; font-size: 13px; font-weight: 750; }
+    .setup-cue { margin-top: 18px; padding: 16px; border-radius: 18px; background: var(--primary-soft); color: var(--primary-dark); font-weight: 750; text-align: center; }
+
+    .metrics { background: linear-gradient(180deg, transparent, rgba(237,249,241,.48), transparent); }
+    .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .metric-card { padding: 24px; min-height: 190px; font-variant-numeric: tabular-nums; }
+    .metric-card.featured { grid-column: span 2; min-height: 230px; background: radial-gradient(circle at 86% 0, rgba(11,139,73,.14), transparent 18rem), #fff; }
+    .metric-card strong { display: block; color: var(--primary); font-size: clamp(34px, 4vw, 48px); line-height: .95; letter-spacing: -.05em; margin-bottom: 14px; }
+    .metric-card b { display: block; font-size: 17px; margin-bottom: 8px; }
+    .metric-card p { margin: 0; font-size: 14px; }
+    .research-note { display: flex; justify-content: space-between; gap: 18px; align-items: center; margin-top: 22px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 20px; background: #fff; }
+    .research-note p { margin: 0; font-size: 14px; }
+    .research-note a { color: var(--primary); font-weight: 850; white-space: nowrap; }
+
+    .integration-carousel { position: relative; overflow: hidden; padding: 24px 0; border: 1px solid var(--line); border-radius: var(--radius-panel); background: rgba(255,255,255,.82); box-shadow: var(--shadow); }
+    .integration-carousel::before, .integration-carousel::after { content: ""; position: absolute; top: 0; bottom: 0; z-index: 2; width: 120px; pointer-events: none; }
+    .integration-carousel::before { left: 0; background: linear-gradient(90deg, #fff, transparent); }
+    .integration-carousel::after { right: 0; background: linear-gradient(270deg, #fff, transparent); }
+    .logo-track { display: flex; width: max-content; gap: 16px; animation: logo-scroll 34s linear infinite; }
+    .integration-carousel:hover .logo-track, .integration-carousel:focus-within .logo-track { animation-play-state: paused; }
+    .logo-card { display: flex; align-items: center; gap: 12px; min-width: 210px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 12px 30px rgba(4,27,18,.05); color: #40564a; font-weight: 850; }
+    .logo-card img { width: 34px; height: 34px; object-fit: contain; }
+    .logo-mark { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); font-size: 12px; font-weight: 900; }
+    .integration-note { margin: 22px auto 0; max-width: 760px; text-align: center; color: var(--muted-foreground); }
+    .integration-note p { margin: 0; }
+    .integration-note .actions { justify-content: center; margin-top: 18px; }
+    @keyframes logo-scroll { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 8px)); } }
+
+    .pillars-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: 22px; align-items: stretch; }
+    .pillar-tabs { display: grid; gap: 10px; align-content: start; }
+    .pillar-tab { width: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 18px; background: #fff; color: #40564a; text-align: left; font: inherit; font-weight: 800; cursor: pointer; }
+    .pillar-tab[aria-selected="true"] { color: var(--primary); background: var(--primary-soft); border-color: rgba(11,139,73,.24); }
+    .pillar-panel { display: grid; grid-template-columns: .95fr 1.05fr; gap: 22px; padding: 30px; }
+    .pillar-copy ul { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 12px; }
+    .pillar-copy li { display: flex; gap: 10px; color: #40564a; }
+    .pillar-copy li::before { content: "✓"; color: var(--primary); font-weight: 900; }
+    .mock-placeholder { min-height: 360px; border: 1px dashed rgba(11,139,73,.28); border-radius: 24px; background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(237,249,241,.86)); padding: 20px; display: grid; align-content: center; gap: 12px; }
+    .placeholder-bar { height: 12px; border-radius: 999px; background: rgba(11,139,73,.16); }
+    .placeholder-bar.short { width: 55%; }
+    .placeholder-card { padding: 16px; border-radius: 16px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 24px rgba(4,27,18,.04); }
+    .placeholder-label { color: var(--primary); font-size: 12px; font-weight: 850; text-transform: uppercase; letter-spacing: .08em; }
+
+    .lead-anatomy { display: grid; grid-template-columns: .72fr 1.4fr .72fr; gap: 18px; align-items: center; }
+    .callouts { display: grid; gap: 14px; }
+    .callout { padding: 18px; border-radius: 20px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .callout b { display: block; margin-bottom: 5px; }
+    .lead-record-mock { padding: 24px; border-radius: var(--radius-panel); background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow-strong); }
+    .record-window { border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: #fbfdfb; }
+    .record-header { padding: 20px; background: #fff; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 14px; align-items: start; }
+    .record-body { display: grid; grid-template-columns: 1fr .72fr; gap: 16px; padding: 20px; }
+    .record-section { padding: 16px; border-radius: 16px; background: #fff; border: 1px solid var(--line); }
+    .record-section small { color: var(--muted-foreground); font-weight: 800; }
+    .timeline { display: grid; gap: 10px; margin-top: 12px; }
+    .timeline span { display: block; padding: 10px; border-radius: 12px; background: var(--muted); color: #40564a; font-size: 13px; font-weight: 700; }
+
+    .mobile-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 30px; align-items: center; }
+    .device-scene { display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; align-items: center; }
+    .desktop-frame, .phone-frame { background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow-strong); }
+    .desktop-frame { min-height: 330px; border-radius: 26px; padding: 20px; }
+    .phone-frame { min-height: 420px; border-radius: 34px; padding: 18px 14px; border: 8px solid #101b15; }
+    .mobile-list { list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .mobile-list li { padding: 14px; border-radius: 16px; background: #fff; border: 1px solid var(--line); color: #40564a; font-weight: 750; }
+    .mobile-list li::before { content: "✓ "; color: var(--primary); font-weight: 900; }
+
+    .use-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .use-card { padding: 24px; }
+    .use-card p { margin-bottom: 0; }
+    .use-card .role-link { display: inline-flex; margin-top: 16px; color: var(--primary); font-weight: 850; }
+
+    .reviews { background: linear-gradient(180deg, rgba(237,249,241,.45), transparent); }
+    .review-grid { display: flex; gap: 18px; overflow-x: auto; padding: 4px 4px 18px; scroll-snap-type: x mandatory; scrollbar-width: thin; scroll-behavior: smooth; }
+    .review-card { flex: 0 0 calc((100% - 36px) / 3); padding: 24px; scroll-snap-align: start; }
+    .review-grid:hover, .review-grid:focus-within, .use-grid:hover, .use-grid:focus-within { scroll-behavior: auto; }
+    .person { display: flex; align-items: center; gap: 13px; margin-bottom: 16px; }
+    .avatar { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); font-weight: 900; }
+    .person b { display: block; }
+    .person small { color: var(--muted-foreground); }
+    .outcome-tag { display: inline-flex; margin-top: 14px; padding: 8px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: 12px; font-weight: 850; }
+
+    .objection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .objection-card { padding: 22px; position: relative; overflow: hidden; }
+    .objection-card::after { content: "?"; position: absolute; right: 16px; top: 4px; color: rgba(11,139,73,.08); font-size: 72px; font-weight: 900; }
+    .objection-card p { position: relative; }
+    .answer-badge { display: inline-flex; position: relative; margin-top: 10px; padding: 8px 10px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); font-size: 12px; font-weight: 850; }
+
+    .buying-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
+    .buying-card { padding: 28px; }
+    .buying-card ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 12px; }
+    .buying-card li { display: flex; gap: 10px; color: #40564a; line-height: 1.45; }
+    .buying-card.without-list li::before { content: "×"; color: #b42318; font-weight: 900; }
+    .buying-card.with-list li::before { content: "✓"; color: var(--primary); font-weight: 900; }
+    .switch-arrow { display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 26px; font-weight: 900; box-shadow: var(--shadow); }
+
+    .faq-shell { display: grid; grid-template-columns: .72fr 1.28fr; gap: 28px; align-items: start; }
+    .faq-list { display: grid; gap: 12px; }
+    .faq-list details { padding: 18px 20px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 10px 26px rgba(4,27,18,.05); }
+    .faq-list summary { cursor: pointer; font-weight: 850; }
+    .faq-list details p { margin-bottom: 0; }
+    .faq-group-title { margin: 20px 0 8px; color: var(--primary); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+    .faq-group-title:first-child { margin-top: 0; }
+
+    .final-panel { padding: 76px 34px; border-radius: 42px; text-align: center; background: radial-gradient(circle at 50% 0, rgba(217,255,113,.32), transparent 32%), linear-gradient(135deg, #06150d, #0b8b49); box-shadow: var(--shadow-strong); }
+    .final-panel h2 { color: #fff; max-width: 900px; margin: auto; }
+    .final-panel p { color: rgba(255,255,255,.78); max-width: 720px; margin: 18px auto 28px; }
+    .final-panel .actions { justify-content: center; }
+    .reassurance { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+    .reassurance span { padding: 9px 12px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.86); font-size: 13px; font-weight: 750; }
+    .footer { padding: 46px 0 60px; color: var(--muted-foreground); }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); padding-top: 26px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; font-weight: 650; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn { transition: none; }
+      .btn:hover { transform: none; }
+      .logo-track { animation: none; }
+    }
+
+    @media (max-width: 1080px) {
+      .links { display: none; }
+      .dashboard-mock, .funnel-compare, .system-map, .metric-grid, .pillars-layout, .pillar-panel, .lead-anatomy, .mobile-layout, .device-scene, .use-grid, .objection-grid, .faq-shell { grid-template-columns: 1fr; }
+      .hub::before, .hub::after { display: none; }
+      .lead-grid { grid-template-columns: 1fr; }
+      .metric-grid, .use-grid, .objection-grid { grid-template-columns: repeat(2, 1fr); }
+      .review-card { flex-basis: calc((100% - 18px) / 2); }
+      .split-line, .split-handle { display: none; }
+      .buying-grid { grid-template-columns: 1fr; }
+      .switch-arrow { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      .wrap, .wide, .header { width: calc(100% - 24px); }
+      .nav { padding: 12px; }
+      .brand span, .nav-actions .btn.secondary { display: none; }
+      section { padding: 64px 0; }
+      .hero { padding-top: 58px; text-align: left; }
+      .hero-inner, .hero-visual { width: calc(100% - 24px); }
+      .hero .actions { justify-content: flex-start; }
+      .actions, .btn { width: 100%; }
+      h1 { font-size: 43px; }
+      h2 { font-size: 36px; }
+      .section-head { text-align: left; }
+      .dashboard-mock { min-height: auto; }
+      .mock-sidebar { display: none; }
+      .hero-visual { padding: 14px; border-radius: 24px; }
+      .mock-main { padding: 18px; }
+      .mock-top { display: grid; }
+      .compare-panel, .hub, .pillar-panel { padding: 22px; }
+      .processing-grid, .metric-grid, .record-body, .mobile-list, .objection-grid { grid-template-columns: 1fr; }
+      .use-grid { display: flex; gap: 14px; overflow-x: auto; padding: 4px 4px 18px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+      .use-card { flex: 0 0 84%; scroll-snap-align: start; }
+      .review-grid { gap: 14px; }
+      .review-card { flex-basis: 84%; }
+      .research-note { display: grid; }
+      .research-note a { white-space: normal; }
+      .lead-anatomy { gap: 14px; }
+      .mock-placeholder, .desktop-frame, .phone-frame { min-height: 260px; }
+      .final-panel { text-align: left; padding: 46px 22px; }
+      .final-panel .actions, .reassurance { justify-content: flex-start; }
+      .footer-inner { flex-direction: column; }
+      .funnel-side { padding: 24px; }
+      .funnel-art { min-height: 320px; }
+      .funnel-labels { position: static; width: auto; margin-bottom: 18px; }
+      .funnel-shape { width: min(260px, 88%); height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#main">
+        <img src="assets/brand/plovercrm-icon.png" alt="PloverCRM logo" width="32" height="32" />
+        <span>PloverCRM</span>
+      </a>
+      <div class="links">
+        <a href="#broken-funnel">Problem</a>
+        <a href="#connected-system">How it works</a>
+        <a href="#metrics">Metrics</a>
+        <a href="#integrations">Integrations</a>
+        <a href="#product-pillars">Features</a>
+        <a href="#faq">FAQs</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn primary" href="/signup/">Download Plugin</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <span class="badge">WordPress-first CRM for lead-based businesses</span>
+        <h1 id="hero-title">Turn your WordPress website into a lead machine.</h1>
+        <p>Every form submission, ad lead, and webhook becomes a follow-up-ready CRM record with source, history, reminders, and next steps.</p>
+        <div class="actions" aria-label="Hero actions">
+          <a class="btn primary" href="/signup/">Download Plugin</a>
+          <a class="btn" href="https://demo.plovercrm.com">Try a Demo</a>
+        </div>
+        <div class="microcopy">No credit card required.</div>
+      </div>
+
+      <div class="hero-visual" aria-label="PloverCRM dashboard preview">
+        <div class="dashboard-mock">
+          <aside class="mock-sidebar" aria-label="Dashboard preview navigation">
+            <div class="mock-logo"><img src="assets/brand/plovercrm-icon.png" alt="" width="28" height="28" />PloverCRM</div>
+            <div class="mock-nav"><span>All Leads</span><span>Pipeline</span><span>Sources</span><span>Reminders</span><span>Reports</span></div>
+          </aside>
+          <div class="mock-main">
+            <div class="mock-top">
+              <div><strong>New website leads</strong><p>Follow-up-ready records from WordPress, ads, and webhooks.</p></div>
+              <span class="mock-pill">Reminder set</span>
+            </div>
+            <div class="lead-grid">
+              <div class="lead-card featured"><small>Lead record</small><b>Sarah Mitchell — Dental consultation</b><p>Source, campaign, submitted details, owner, stage, and next action stay together.</p><div class="stage-row"><span>WordPress Form</span><span>Google Ads</span><span>Owner: Adam</span></div></div>
+              <div class="lead-card"><small>Next action</small><b>Call today at 3:00 PM</b><p>Follow up before the lead gets cold.</p></div>
+              <div class="lead-card"><small>Source</small><b>Contact Form 7 / Pricing page</b><p>UTM and form details remain attached.</p></div>
+              <div class="lead-card"><small>Pipeline</small><b>New Lead → Contacted → Qualified</b><p>Your team sees where every lead stands.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="broken-funnel" class="funnel" aria-labelledby="broken-funnel-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="badge">Broken Funnel vs Lead-Control Funnel</span>
+          <h2 id="broken-funnel-title">Most leads are not lost at capture. They are lost after capture.</h2>
+          <p>Your forms, ads, calls, WhatsApp messages, and webhooks may already be bringing in leads. The problem starts when those leads stay scattered, unassigned, and hard to follow up.</p>
+        </div>
+
+        <div class="funnel-compare" aria-label="Broken funnel versus lead-control funnel comparison">
+          <div class="split-line" aria-hidden="true"></div>
+          <div class="split-handle" aria-hidden="true">↔</div>
+
+          <article class="funnel-side broken">
+            <div class="funnel-art" aria-hidden="true">
+              <div class="funnel-labels"><span>Forms</span><span>Ads</span><span>Calls</span><span>WhatsApp</span></div>
+              <div class="funnel-shape"><div class="funnel-lip"></div><span class="crack one"></span><span class="crack two"></span><span class="crack three"></span><span class="leak"></span></div>
+            </div>
+            <div class="funnel-caption">
+              <h3>Without PloverCRM</h3>
+              <p>Captured leads leak into separate tools, inboxes, notes, and spreadsheets.</p>
+              <div class="caption-points"><span>Source and campaign details get separated.</span><span>No one knows who should follow up.</span><span>No reminder, history, or next action.</span></div>
+            </div>
+          </article>
+
+          <article class="funnel-side control">
+            <div class="funnel-art" aria-hidden="true">
+              <div class="funnel-labels"><span>Brand Visibility</span><span>Website Traffic</span><span>Qualified Leads</span><span>Sales</span></div>
+              <div class="funnel-shape controlled"><div class="funnel-lip"></div></div>
+            </div>
+            <div class="funnel-caption">
+              <h3>With PloverCRM</h3>
+              <p>Every channel becomes one lead-control funnel with context, ownership, reminders, and outcomes.</p>
+              <div class="caption-points"><span>Source, campaign, and form data stay attached.</span><span>Follow-up responsibility and reminders are clear.</span><span>Outcomes can support automation and ad reporting.</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="funnel-note"><p>Every scattered lead creates a follow-up gap. The longer a lead sits without source, history, reminder, and next step, the colder it gets.</p></div>
+      </div>
+    </section>
+
+    <section id="connected-system" aria-labelledby="connected-system-title">
+      <div class="wide">
+        <div class="section-head">
+          <span class="badge">Connected Lead System</span>
+          <h2 id="connected-system-title">Connect every lead source to one follow-up system.</h2>
+          <p>PloverCRM connects forms, ads, webhooks, manual entries, mobile access, reminders, automations, and outcome routing into one WordPress-first lead workspace.</p>
+        </div>
+
+        <div class="system-map">
+          <div class="map-column">
+            <p class="map-label">Lead sources</p>
+            <div class="source-box"><img src="assets/integrations/wordpress.png" alt="WordPress logo" width="32" height="32" />WordPress forms</div>
+            <div class="source-box"><span class="source-icon">CF7</span>Contact Form 7</div>
+            <div class="source-box"><img src="assets/integrations/google-ads.webp" alt="Google Ads logo" width="32" height="32" />Google Ads</div>
+            <div class="source-box"><img src="assets/integrations/meta-ads.png" alt="Meta Ads logo" width="32" height="32" />Meta Lead Ads</div>
+            <div class="source-box"><img src="assets/integrations/webhook.png" alt="Webhook icon" width="32" height="32" />Webhooks</div>
+          </div>
+
+          <div class="hub">
+            <div class="hub-core"><img src="assets/brand/plovercrm-icon.png" alt="PloverCRM icon" width="58" height="58" /></div>
+            <h3>PloverCRM workspace</h3>
+            <p>Field mapping, contact enrichment, source tracking, UTM capture, duplicate checking, campaign attribution, and lead routing prepare every record for action.</p>
+            <div class="processing-grid" aria-label="Automatic structure features">
+              <span class="process-chip">Field mapping</span>
+              <span class="process-chip">Source tracking</span>
+              <span class="process-chip">UTM capture</span>
+              <span class="process-chip">Lead routing</span>
+              <span class="process-chip">Duplicate checking</span>
+              <span class="process-chip">Campaign attribution</span>
+            </div>
+            <div class="setup-cue">Set up your first source in minutes. Start with one source, then add more when you are ready.</div>
+          </div>
+
+          <div class="map-column">
+            <p class="map-label">Follow-up and outcomes</p>
+            <div class="output-box"><span class="source-icon">CRM</span>Desktop CRM</div>
+            <div class="output-box"><span class="source-icon">iOS</span>Mobile CRM</div>
+            <div class="output-box"><span class="source-icon">↗</span>Email actions</div>
+            <div class="output-box"><span class="source-icon">⚙</span>Automation workflows</div>
+            <div class="output-box"><span class="source-icon">✓</span>Pipeline updates</div>
+            <div class="output-box"><span class="source-icon">AD</span>Outcome data</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="metrics" class="metrics" aria-labelledby="metrics-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="badge">Metric Benefits</span>
+          <h2 id="metrics-title">Why lead control matters.</h2>
+          <p>Industry research shows why fast response, CRM visibility, mobile access, automation, and lead-quality tracking matter after a lead is captured.</p>
+        </div>
+        <div class="metric-grid">
+          <article class="metric-card featured card"><strong>21x</strong><b>Response advantage</b><p>Responding in minutes can protect qualification chances before a lead goes cold.</p></article>
+          <article class="metric-card featured card"><strong>10x</strong><b>Contact advantage</b><p>Faster follow-up helps teams reach leads while interest is still fresh.</p></article>
+          <article class="metric-card card"><strong>74%</strong><b>Better data access</b><p>CRM users report better access to customer data when information is organized in one place.</p></article>
+          <article class="metric-card card"><strong>65%</strong><b>Quota attainment</b><p>Sales teams with mobile CRM access are reported to hit quotas at higher rates.</p></article>
+          <article class="metric-card card"><strong>50%</strong><b>Productivity lift</b><p>Mobile CRM access helps teams keep lead work moving outside the office.</p></article>
+          <article class="metric-card card"><strong>91%</strong><b>CRM adoption</b><p>Growing teams commonly use CRM systems to manage customer and lead data.</p></article>
+          <article class="metric-card card"><strong>47%</strong><b>Use automation</b><p>Marketers use automation to make lead and marketing processes more efficient.</p></article>
+          <article class="metric-card card"><strong>40%</strong><b>Focus on lead quality</b><p>Marketers rank lead quality and MQLs among their most important success metrics.</p></article>
+        </div>
+        <div class="research-note">
+          <p>Benchmarks are based on public lead-response, CRM, mobile CRM, and marketing research. Product results vary by workflow.</p>
+          <a href="landing-page-metric-research.md">Read the research behind these numbers</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="integrations" aria-labelledby="integrations-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="badge">Integrations</span>
+          <h2 id="integrations-title">Works with the tools your leads already come from.</h2>
+          <p>Connect real lead sources such as WordPress forms, Google Ads, Meta Ads, WhatsApp, and webhooks. Keep this section clean now, then link each logo to its own integration page later.</p>
+        </div>
+        <div class="integration-carousel" id="integrationCarousel" aria-label="PloverCRM supported integration logos">
+          <div class="logo-track">
+            <div class="logo-card"><img src="assets/integrations/wordpress.png" alt="WordPress logo" width="34" height="34" loading="lazy" />WordPress Forms</div>
+            <div class="logo-card"><img src="assets/integrations/contact-form-7.png" alt="Contact Form 7 logo" width="34" height="34" loading="lazy" />Contact Form 7</div>
+            <div class="logo-card"><img src="assets/integrations/fluent-forms.png" alt="Fluent Forms logo" width="34" height="34" loading="lazy" />Fluent Forms</div>
+            <div class="logo-card"><img src="assets/integrations/elementor.png" alt="Elementor logo" width="34" height="34" loading="lazy" />Elementor Forms</div>
+            <div class="logo-card"><img src="assets/integrations/wpforms.png" alt="WPForms logo" width="34" height="34" loading="lazy" />WPForms</div>
+            <div class="logo-card"><img src="assets/integrations/gravity-forms.png" alt="Gravity Forms logo" width="34" height="34" loading="lazy" />Gravity Forms</div>
+            <div class="logo-card"><img src="assets/integrations/google-ads.webp" alt="Google Ads logo" width="34" height="34" loading="lazy" />Google Ads</div>
+            <div class="logo-card"><img src="assets/integrations/meta-ads.png" alt="Meta Ads logo" width="34" height="34" loading="lazy" />Meta Ads</div>
+            <div class="logo-card"><img src="assets/integrations/whatsapp.png" alt="WhatsApp logo" width="34" height="34" loading="lazy" />WhatsApp</div>
+            <div class="logo-card"><img src="assets/integrations/webhook.png" alt="Webhook icon" width="34" height="34" loading="lazy" />Webhooks</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/wordpress.png" alt="" width="34" height="34" loading="lazy" />WordPress Forms</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/contact-form-7.png" alt="" width="34" height="34" loading="lazy" />Contact Form 7</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/fluent-forms.png" alt="" width="34" height="34" loading="lazy" />Fluent Forms</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/elementor.png" alt="" width="34" height="34" loading="lazy" />Elementor Forms</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/wpforms.png" alt="" width="34" height="34" loading="lazy" />WPForms</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/gravity-forms.png" alt="" width="34" height="34" loading="lazy" />Gravity Forms</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/google-ads.webp" alt="" width="34" height="34" loading="lazy" />Google Ads</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/meta-ads.png" alt="" width="34" height="34" loading="lazy" />Meta Ads</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/whatsapp.png" alt="" width="34" height="34" loading="lazy" />WhatsApp</div>
+            <div class="logo-card" aria-hidden="true"><img src="assets/integrations/webhook.png" alt="" width="34" height="34" loading="lazy" />Webhooks</div>
+          </div>
+        </div>
+        <div class="integration-note">
+          <p>Start with one source, then add more later. Integration pages can be linked from these logo cards when they are ready.</p>
+          <div class="actions"><a class="btn primary" href="https://demo.plovercrm.com">Try a Demo</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="product-pillars" aria-labelledby="pillars-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="badge">Product Pillars Tabs</span>
+          <h2 id="pillars-title">Everything your team needs after a lead comes in.</h2>
+          <p>PloverCRM captures, enriches, assigns, tracks, reminds, automates, and preserves lead history without turning your WordPress workflow into a heavy CRM project.</p>
+        </div>
+        <div class="pillars-layout">
+          <div class="pillar-tabs" role="tablist" aria-label="Product pillars">
+            <button class="pillar-tab" type="button" role="tab" aria-selected="true" data-title="Lead capture & field mapping" data-copy="Capture leads from forms, ads, and webhooks." data-points="Map custom fields into the correct CRM fields.|Reduce manual copy-paste.|Create cleaner lead records from the start.">Lead capture & field mapping</button>
+            <button class="pillar-tab" type="button" role="tab" aria-selected="false" data-title="Contact enrichment & source tracking" data-copy="Track source, campaign, form, page, UTM, device, and submitted details." data-points="Keep context beside every lead.|Make each record more useful before follow-up begins.|See which sources create better opportunities.">Contact enrichment & source tracking</button>
+            <button class="pillar-tab" type="button" role="tab" aria-selected="false" data-title="Follow-up reminders" data-copy="Keep next actions visible before leads go cold." data-points="Set reminder dates.|Show urgent leads clearly.|Help teams follow up from web or mobile.">Follow-up reminders</button>
+            <button class="pillar-tab" type="button" role="tab" aria-selected="false" data-title="Lead assignment" data-copy="Assign leads manually or automatically." data-points="Clarify who owns the next step.|Reduce duplicate replies.|Keep accountability visible.">Lead assignment</button>
+            <button class="pillar-tab" type="button" role="tab" aria-selected="false" data-title="Pipeline management" data-copy="See where each lead is in the customer journey." data-points="Prioritize active opportunities.|Move leads through stages.|Close or continue follow-up with context.">Pipeline management</button>
+            <button class="pillar-tab" type="button" role="tab" aria-selected="false" data-title="Automation workflows" data-copy="Trigger notifications, templates, outgoing webhooks, ad outcome routing, and workflow actions." data-points="Reduce repetitive work.|Keep lead movement consistent.|Support automation and ad reporting.">Automation workflows</button>
+            <button class="pillar-tab" type="button" role="tab" aria-selected="false" data-title="Lead history & activity timeline" data-copy="Keep notes, status changes, reminders, communication history, and activity in one place." data-points="Preserve the full story.|Make handoffs easier.|Review what happened before the next action.">Lead history & activity timeline</button>
+          </div>
+          <article class="pillar-panel card">
+            <div class="pillar-copy">
+              <h3 id="pillarPanelTitle">Lead capture & field mapping</h3>
+              <p id="pillarPanelCopy">Capture leads from forms, ads, and webhooks.</p>
+              <ul id="pillarPanelPoints"><li>Map custom fields into the correct CRM fields.</li><li>Reduce manual copy-paste.</li><li>Create cleaner lead records from the start.</li></ul>
+            </div>
+            <div class="mock-placeholder" aria-label="Mockup placeholder for selected product pillar screenshot">
+              <span class="placeholder-label">Mockup placeholder</span>
+              <div class="placeholder-card"><div class="placeholder-bar short"></div><p>Place the matching product screenshot or UI crop here.</p></div>
+              <div class="placeholder-card"><div class="placeholder-bar"></div><div class="placeholder-bar short"></div></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="lead-record" aria-labelledby="lead-record-title">
+      <div class="wide">
+        <div class="section-head">
+          <span class="badge">Live Lead Record</span>
+          <h2 id="lead-record-title">Every lead record shows the full story.</h2>
+          <p>See the source, submitted details, stage, reminder, notes, activity history, and next action in one follow-up-ready record.</p>
+        </div>
+        <div class="lead-anatomy">
+          <div class="callouts"><div class="callout"><b>Source</b><p>Channel, campaign, form, and page context.</p></div><div class="callout"><b>Submitted details</b><p>Mapped fields from the original inquiry.</p></div><div class="callout"><b>Stage</b><p>Where the lead sits in the pipeline.</p></div></div>
+          <div class="lead-record-mock" aria-label="Mockup placeholder for live lead record screenshot">
+            <div class="record-window">
+              <div class="record-header"><div><h3>Sarah Mitchell</h3><p>Dental consultation request from pricing page.</p></div><span class="mock-pill">Follow-up ready</span></div>
+              <div class="record-body">
+                <div class="record-section"><small>Lead details screenshot placeholder</small><div class="placeholder-card"><div class="placeholder-bar"></div><div class="placeholder-bar short"></div></div><div class="placeholder-card"><div class="placeholder-bar"></div><div class="placeholder-bar short"></div></div></div>
+                <div class="record-section"><small>Activity history</small><div class="timeline"><span>Form submitted</span><span>Source attached</span><span>Reminder created</span><span>Next action assigned</span></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="callouts"><div class="callout"><b>Reminder</b><p>The next follow-up stays visible.</p></div><div class="callout"><b>History</b><p>Notes, status changes, and activity stay together.</p></div><div class="callout"><b>Next step</b><p>Your team knows what should happen now.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mobile-crm" aria-labelledby="mobile-crm-title">
+      <div class="wrap mobile-layout">
+        <div>
+          <span class="badge">Mobile CRM Access</span>
+          <h2 id="mobile-crm-title">Manage every lead from desktop, iPhone, or Android.</h2>
+          <p>PloverCRM is not just a WordPress admin dashboard. Your team can receive notifications, open lead records, update stages, set reminders, and follow up from web or native mobile apps.</p>
+          <ul class="mobile-list">
+            <li>Native iOS and Android access</li><li>Desktop CRM access</li><li>Mobile notifications for new leads</li><li>Open lead details instantly</li><li>Call, email, message, or update status from mobile</li><li>Keep desktop and mobile records synced</li>
+          </ul>
+          <div class="actions section-actions"><a class="btn primary" href="/signup/">Download Plugin</a><a class="btn" href="https://demo.plovercrm.com">Try a Demo</a></div>
+        </div>
+        <div class="device-scene" aria-label="Mockup placeholders for desktop and mobile CRM screenshots">
+          <div class="desktop-frame"><span class="placeholder-label">Desktop CRM mockup placeholder</span><div class="placeholder-card"><div class="placeholder-bar"></div><div class="placeholder-bar short"></div></div><div class="placeholder-card"><div class="placeholder-bar"></div><div class="placeholder-bar short"></div></div></div>
+          <div class="phone-frame"><span class="placeholder-label">Mobile app mockup placeholder</span><div class="placeholder-card"><div class="placeholder-bar"></div><div class="placeholder-bar short"></div></div><div class="placeholder-card"><div class="placeholder-bar short"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases" aria-labelledby="use-cases-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="badge">Use Cases</span>
+          <h2 id="use-cases-title">Built for teams that live on incoming leads.</h2>
+          <p>Whether you run a business, manage campaigns, handle sales, or build WordPress sites for clients, PloverCRM helps you control what happens after the lead comes in.</p>
+        </div>
+        <div class="use-grid" id="useCaseSlider" data-auto-slider>
+          <article class="use-card card"><h3>Business owners</h3><p>Leads come from too many places, and follow-up depends on memory. Put every inquiry into one CRM with stage, reminder, history, and next step.</p><a class="role-link" href="#">CRM for business owners</a></article>
+          <article class="use-card card"><h3>Digital agencies</h3><p>Clients ask which campaigns produce real leads, not just form fills. Track source, campaign, lead quality, and follow-up outcomes.</p><a class="role-link" href="#">CRM for agencies</a></article>
+          <article class="use-card card"><h3>Sales teams</h3><p>Leads go cold because responsibility and next steps are unclear. Assign leads, update stages, set reminders, and follow up from web or mobile.</p><a class="role-link" href="#">CRM for sales teams</a></article>
+          <article class="use-card card"><h3>WordPress teams</h3><p>Form entries stay inside plugins, inboxes, and spreadsheets. Turn WordPress submissions into structured CRM records.</p><a class="role-link" href="#">CRM for WordPress websites</a></article>
+          <article class="use-card card"><h3>Service businesses</h3><p>Calls, forms, WhatsApp messages, and ad leads are scattered. Bring every inquiry into one follow-up pipeline.</p><a class="role-link" href="#">CRM for service businesses</a></article>
+          <article class="use-card card"><h3>Marketing teams</h3><p>Ad reports show leads, but not which leads became real opportunities. Connect lead outcomes back to campaigns and follow-up activity.</p><a class="role-link" href="#">CRM for marketing teams</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews" class="reviews" aria-labelledby="reviews-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="badge">Customer Reviews / Outcomes</span>
+          <h2 id="reviews-title">From lead chaos to lead control.</h2>
+          <p>See how teams use PloverCRM to bring scattered leads, follow-up reminders, campaign visibility, and mobile access into one workflow.</p>
+        </div>
+        <div class="review-grid" id="reviewSlider" data-auto-slider>
+          <article class="review-card card"><div class="person"><span class="avatar">SM</span><div><b>Sarah Mitchell</b><small>Owner, BrightPath Dental Studio</small></div></div><p>“Our leads used to sit in forms, emails, and notes. Now I can see what needs follow-up without asking the team or checking three different places.”</p><span class="outcome-tag">Missed-lead control</span></article>
+          <article class="review-card card"><div class="person"><span class="avatar">DB</span><div><b>Daniel Brooks</b><small>Founder, Northline Digital</small></div></div><p>“We can finally connect website inquiries with the forms and campaigns that created them. Client reporting feels much clearer now.”</p><span class="outcome-tag">Campaign visibility</span></article>
+          <article class="review-card card"><div class="person"><span class="avatar">PS</span><div><b>Priya Shah</b><small>Sales Manager, MetroBuild Services</small></div></div><p>“The biggest change is accountability. Every lead has a status, reminder, and next step, so follow-up no longer depends on memory.”</p><span class="outcome-tag">Team accountability</span></article>
+          <article class="review-card card"><div class="person"><span class="avatar">AR</span><div><b>Adam Reynolds</b><small>WordPress Consultant, FormFlow Studio</small></div></div><p>“We were already collecting form entries, but managing them after submission was messy. Now those entries feel like real CRM records.”</p><span class="outcome-tag">WordPress forms</span></article>
+          <article class="review-card card"><div class="person"><span class="avatar">JM</span><div><b>Jessica Morgan</b><small>Operations Lead, PrimeCare Home Services</small></div></div><p>“Our team can open a lead, check the details, update the stage, and set the next reminder even away from the desk.”</p><span class="outcome-tag">Mobile follow-up</span></article>
+          <article class="review-card card"><div class="person"><span class="avatar">OK</span><div><b>Omar Khan</b><small>Performance Marketing Manager, ScaleWise Agency</small></div></div><p>“It gives us a clearer view of what happens after a lead comes in, not just which channel created the form fill.”</p><span class="outcome-tag">Outcome visibility</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="objections" aria-labelledby="objections-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="badge">Objection Handling</span>
+          <h2 id="objections-title">Built for WordPress leads, not heavy CRM complexity.</h2>
+          <p>Forms are not follow-up, and many large CRMs are more than a WordPress-first lead workflow needs.</p>
+        </div>
+        <div class="objection-grid">
+          <article class="objection-card card"><h3>“We already have forms.”</h3><p>Forms capture the lead. PloverCRM manages what happens after the submission. You do not need to replace your current forms.</p><span class="answer-badge">Capture is not follow-up.</span></article>
+          <article class="objection-card card"><h3>“Do we need a heavy CRM setup?”</h3><p>No heavy CRM setup. No spreadsheet migration required. Start with the resources you already have and connect one source first.</p><span class="answer-badge">Start with what you use.</span></article>
+          <article class="objection-card card"><h3>“Will setup take too long?”</h3><p>The onboarding setup wizard helps teams connect their first source in around 2–3 minutes, then add more sources later.</p><span class="answer-badge">First source in minutes.</span></article>
+          <article class="objection-card card"><h3>“Why not use a larger CRM?”</h3><p>Large platforms can be powerful, but many WordPress businesses only need focused lead control: source, stage, reminder, history, mobile access, and outcomes.</p><span class="answer-badge">Focused WordPress lead CRM.</span></article>
+          <article class="objection-card card"><h3>“Is it a full replacement?”</h3><p>Not always. PloverCRM is for teams that want a cleaner WordPress-first lead-control system without moving every workflow into a broad external platform.</p><span class="answer-badge">Not bloated. Not generic.</span></article>
+          <article class="objection-card card"><h3>“Will this cost more than it saves?”</h3><p>Missed leads, slow response, and unclear responsibility often cost more than the CRM itself.</p><span class="answer-badge">Recover more opportunities.</span></article>
+          <article class="objection-card card"><h3>“Who owns the data?”</h3><p>PloverCRM keeps the lead workflow closer to your WordPress business instead of forcing every lead into a disconnected external system.</p><span class="answer-badge">More control over lead data.</span></article>
+          <article class="objection-card card"><h3>“Will this be complicated?”</h3><p>PloverCRM focuses on the lead workflow: source, stage, reminder, next action, and history.</p><span class="answer-badge">Simple lead control.</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="buying-comparison" aria-labelledby="buying-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="badge">Practical Buying Comparison</span>
+          <h2 id="buying-title">What changes when every lead has a system?</h2>
+          <p>Without PloverCRM, captured leads stay scattered and follow-up depends on memory. With PloverCRM, every lead has context, history, reminders, and a clear next step.</p>
+        </div>
+        <div class="buying-grid">
+          <article class="buying-card without-list card"><h3>Without PloverCRM</h3><ul><li>Leads stay in separate channels.</li><li>Source details disappear.</li><li>No complete lead history.</li><li>No clear follow-up path.</li><li>Follow-up reminders are missing.</li><li>Mobile response is inconsistent.</li><li>Ad platforms see form fills, not lead quality.</li><li>Team visibility is limited.</li><li>Spreadsheet cleanup becomes a manual habit.</li><li>Moving into a heavy CRM feels bigger than the lead problem.</li></ul></article>
+          <div class="switch-arrow" aria-hidden="true">→</div>
+          <article class="buying-card with-list card"><h3>With PloverCRM</h3><ul><li>Leads become CRM records.</li><li>Source and campaign stay attached.</li><li>Notes and activity history stay together.</li><li>Stage and next step are visible.</li><li>Reminders keep follow-up active.</li><li>Web and mobile access stay synced.</li><li>Lead outcomes can support ad reporting.</li><li>Team visibility improves.</li><li>No spreadsheet migration required to begin.</li><li>No replacing your current forms.</li><li>No heavy CRM setup to start.</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-title">
+      <div class="wrap faq-shell">
+        <div><span class="badge">FAQ</span><h2 id="faq-title">Questions before you download.</h2><p>Practical answers about setup, sources, integrations, and follow-up workflows.</p></div>
+        <div class="faq-list">
+          <div class="faq-group-title">Setup and trial</div>
+          <details open><summary>Is there a 30-day free trial?</summary><p>Yes. You can download the plugin as a 30-day trial after signup.</p></details>
+          <details><summary>Do I need a credit card?</summary><p>No credit card is required to start.</p></details>
+          <details><summary>How long does setup take?</summary><p>The onboarding setup wizard helps you connect your first source in around 2–3 minutes.</p></details>
+          <details><summary>Can I try the live demo before installing?</summary><p>Yes. You can try the live demo with sample data before connecting your own website.</p></details>
+          <div class="faq-group-title">Sources and integrations</div>
+          <details><summary>Does PloverCRM work with WordPress?</summary><p>Yes. PloverCRM is built for WordPress-first lead workflows.</p></details>
+          <details><summary>Which form plugins are supported?</summary><p>PloverCRM is planned around common WordPress form workflows such as Contact Form 7, Fluent Forms, Elementor Forms, WPForms, Gravity Forms, and other supported sources.</p></details>
+          <details><summary>Can I connect Google Ads and Meta Lead Ads?</summary><p>Yes. PloverCRM is designed to support lead source tracking and outcome visibility for ad-driven workflows.</p></details>
+          <details><summary>Does PloverCRM support webhooks?</summary><p>Yes. Webhooks are part of the planned lead-source and automation workflow.</p></details>
+          <div class="faq-group-title">Workflow and follow-up</div>
+          <details><summary>Do I need to replace my existing forms?</summary><p>No. PloverCRM is designed to work with your existing lead sources instead of forcing you to replace everything.</p></details>
+          <details><summary>Do I need to migrate spreadsheets?</summary><p>No spreadsheet migration is required to begin. You can start with new incoming leads and build from there.</p></details>
+          <details><summary>Does PloverCRM have mobile apps?</summary><p>Yes. PloverCRM supports lead access from desktop, iPhone, and Android.</p></details>
+          <details><summary>Can I set follow-up reminders?</summary><p>Yes. Follow-up reminders help keep next actions visible before the lead gets cold.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section id="final-cta" aria-labelledby="final-cta-title">
+      <div class="wrap">
+        <div class="final-panel">
+          <h2 id="final-cta-title">Turn your next form submission into a follow-up-ready lead.</h2>
+          <p>Connect your sources, enrich every record, set reminders, and manage follow-up from one WordPress-first CRM.</p>
+          <div class="actions"><a class="btn primary" href="/signup/">Download Plugin</a><a class="btn" href="https://demo.plovercrm.com">Try a Demo</a></div>
+          <div class="reassurance"><span>30-day free trial</span><span>No credit card required</span><span>Works with your existing WordPress forms</span><span>Set up your first source in minutes</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div><b>PloverCRM</b><p>WordPress-first lead management for teams that need lead control after capture.</p></div>
+      <div class="footer-links"><a href="#product-pillars">Features</a><a href="#connected-system">How it works</a><a href="#integrations">Integrations</a><a href="#faq">FAQ</a><a href="#final-cta">Download Plugin</a></div>
+    </div>
+  </footer>
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function setupSubtleAutoSlider(slider) {
+      if (prefersReducedMotion) return;
+      let timer;
+      const stop = () => clearInterval(timer);
+      const cardStep = () => {
+        const first = slider.children[0];
+        if (!first) return slider.clientWidth;
+        const gap = parseFloat(getComputedStyle(slider).gap || 0);
+        return first.getBoundingClientRect().width + gap;
+      };
+      const go = () => {
+        const maxScroll = slider.scrollWidth - slider.clientWidth - 4;
+        if (slider.scrollLeft >= maxScroll) {
+          slider.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          slider.scrollBy({ left: cardStep(), behavior: 'smooth' });
+        }
+      };
+      const start = () => {
+        stop();
+        timer = setInterval(go, 4400);
+      };
+      slider.addEventListener('mouseenter', stop);
+      slider.addEventListener('focusin', stop);
+      slider.addEventListener('pointerdown', stop);
+      slider.addEventListener('wheel', stop, { passive: true });
+      slider.addEventListener('mouseleave', start);
+      slider.addEventListener('focusout', start);
+      start();
+    }
+    document.querySelectorAll('[data-auto-slider]').forEach(setupSubtleAutoSlider);
+
+    const pillarTabs = [...document.querySelectorAll('.pillar-tab')];
+    const pillarTitle = document.getElementById('pillarPanelTitle');
+    const pillarCopy = document.getElementById('pillarPanelCopy');
+    const pillarPoints = document.getElementById('pillarPanelPoints');
+    pillarTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        pillarTabs.forEach(item => item.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+        pillarTitle.textContent = tab.dataset.title;
+        pillarCopy.textContent = tab.dataset.copy;
+        pillarPoints.innerHTML = tab.dataset.points.split('|').map(point => `<li>${point}</li>`).join('');
+      });
+    });
+  </script>
+</body>
+</html>
