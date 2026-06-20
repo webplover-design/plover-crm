@@ -768,6 +768,16 @@ p,.lead,.review-text,.marketplace-copy p,.pillar-content p,.story-step p,.compar
     if (reviewLogoBar) {
       reviewLogoBar.querySelectorAll('.review-logo-btn[aria-hidden="true"]').forEach((clone) => clone.remove());
     }
+    const originalReviewLogos = Array.from(document.querySelectorAll('.review-logo-btn'));
+    if (reviewLogoBar && originalReviewLogos.length) {
+      originalReviewLogos.forEach((logo) => {
+        const clone = logo.cloneNode(true);
+        clone.classList.remove('active');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.tabIndex = -1;
+        reviewLogoBar.appendChild(clone);
+      });
+    }
     const reviewLogos = document.querySelectorAll('.review-logo-btn');
     const reviewDots = document.querySelectorAll('.review-dot');
     const reviewText = document.querySelector('#review-text');
@@ -784,12 +794,13 @@ p,.lead,.review-text,.marketplace-copy p,.pillar-content p,.story-step p,.compar
       reviewLogos.forEach((logo) => {
         const isActive = Number(logo.dataset.review) === index;
         logo.classList.toggle('active', isActive);
-        if (isActive && logo.parentElement) {
-          const logoBar = logo.parentElement;
-          const targetLeft = logo.offsetLeft - (logoBar.clientWidth - logo.clientWidth) / 2;
-          logoBar.scrollTo({ left: targetLeft, behavior: 'smooth' });
-        }
       });
+      const activeLogo = Array.from(reviewLogos).find((logo) => Number(logo.dataset.review) === index && logo.getAttribute('aria-hidden') !== 'true');
+      if (activeLogo && activeLogo.parentElement) {
+        const logoBar = activeLogo.parentElement;
+        const targetLeft = activeLogo.offsetLeft - (logoBar.clientWidth - activeLogo.clientWidth) / 2;
+        logoBar.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      }
       reviewDots.forEach((dot) => dot.classList.toggle('active', Number(dot.dataset.review) === index));
       if (reviewText) reviewText.textContent = item.text;
       if (reviewStars) reviewStars.textContent = item.stars;
