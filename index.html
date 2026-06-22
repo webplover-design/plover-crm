@@ -395,6 +395,7 @@ p,.lead,.review-text,.marketplace-copy p,.pillar-content p,.story-step p,.compar
   #mobile-crm-access{min-height:500vh!important;padding-top:64px!important;padding-bottom:64px!important;overflow:visible!important}
   #mobile-crm-access .mobile-layout{position:sticky!important;top:104px!important;align-self:start!important}
   #faq{padding-bottom:52px!important}
+  #faq .section-head{position:sticky!important;top:118px!important;align-self:start!important}
   #final-cta{padding-top:52px!important}
   .final-cta{padding-bottom:72px!important}
   #integrations-title,#lead-record-title,#comparison-title{font-size:3.16em!important;line-height:1.1!important;letter-spacing:-.04em!important}
@@ -776,6 +777,13 @@ p,.lead,.review-text,.marketplace-copy p,.pillar-content p,.story-step p,.compar
         clone.setAttribute('aria-hidden', 'true');
         clone.tabIndex = -1;
         reviewLogoBar.appendChild(clone);
+      });
+      [...originalReviewLogos].reverse().forEach((logo) => {
+        const clone = logo.cloneNode(true);
+        clone.classList.remove('active');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.tabIndex = -1;
+        reviewLogoBar.insertBefore(clone, reviewLogoBar.firstChild);
       });
     }
     const reviewLogos = document.querySelectorAll('.review-logo-btn');
